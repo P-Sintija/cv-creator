@@ -10,6 +10,7 @@ use App\Http\Controllers\Edit\AddressController;
 use App\Http\Controllers\Edit\BasicDataController;
 use App\Http\Controllers\Edit\EducationController;
 use App\Http\Controllers\Edit\EmploymentController;
+use App\Http\Controllers\Edit\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -23,7 +24,9 @@ Route::post('/cv/update/basicData', [BasicDataController::class, 'update'])->nam
 Route::post('/cv/update/address', [AddressController::class, 'update'])->name('address.update');
 Route::post('/cv/update/education', [EducationController::class, 'update'])->name('education.update');
 Route::post('/cv/update/employment', [EmploymentController::class, 'update'])->name('employment.update');
+Route::post('/cv/update/language', [LanguageController::class, 'update'])->name('language.update');
 Route::post('/cv/delete/education', [DeleteController::class, 'destroyEducationEntity'])->name('delete.destroyEducationEntity');
 Route::post('/cv/delete/employment', [DeleteController::class, 'destroyEmploymentEntity'])->name('delete.destroyEmploymentEntity');
+Route::post('/cv/delete/language', [DeleteController::class, 'destroyLanguageEntity'])->name('delete.destroyLanguageEntity');
 
 Route::get('/session', [SessionController::class, 'index'])->name('session.index');

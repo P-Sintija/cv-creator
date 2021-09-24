@@ -1,29 +1,42 @@
 <template>
-  <form>
-    <div>
-      <h3>Pamatdati</h3>
-      <div>
-        <label>Vārds</label>
-        <input type="text" v-model="basicData.name" value="basicData.name" />
+  <form class="flex flex-col gap-4 bg-gray-200 rounded p-8 shadow-md">
+    <div class="flex flex-col gap-4">
+      <h3 class="text-3xl text-gray-700">Pamatdati</h3>
+      <div class="flex flex-col">
+        <label class="text-gray-700 select-none font-medium">Vārds</label>
+        <input class="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200" 
+        type="text" v-model="basicData.name" value="basicData.name" />
       </div>
-      <div>
-        <label>Uzvārds</label>
-        <input
+      <div class="flex flex-col">
+        <label class="text-gray-700 select-none font-medium">Uzvārds</label>
+        <input class="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
           type="text"
           v-model="basicData.surname"
           value="basicData.surname"
         />
       </div>
-      <div>
-        <label>Tālrunis</label>
-        <input type="text" v-model="basicData.phone" value="basicData.phone" />
+      <div class="flex flex-col">
+        <label class="text-gray-700 select-none font-medium">Tālrunis</label>
+        <input class="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        type="text" v-model="basicData.phone" value="basicData.phone" />
       </div>
-      <div>
-        <label>epasts</label>
-        <input type="email" v-model="basicData.email" value="basicData.email" />
+      <div class="flex flex-col">
+        <label class="text-gray-700 select-none font-medium">epasts</label>
+        <input class="w-1/2 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        type="email" v-model="basicData.email" value="basicData.email" />
       </div>
     </div>
-    <font-awesome-icon :icon="saveIcon" @click="editData()" />
+    <font-awesome-icon  class="h-9 text-yellow-500" style="width: 40px !important;"
+      :icon="saveIcon" @click="editData()" 
+      />
+    <div v-if="errors.length" class="flex flex-col rounded p-8 shadow-md border-red-100 bg-red-50 text-red-800">
+        <p>
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+          </ul>
+        </p>
+    </div>
   </form>
 </template>
 
@@ -46,6 +59,7 @@ export default {
         email: "",
       },
       saveIcon: faSave,
+      errors: [],
     };
   },
   beforeMount() {
@@ -59,17 +73,39 @@ export default {
       this.basicData.phone = this.userBasicData.phone;
       this.basicData.email = this.userBasicData.email;
     },
+    checkForm() {
+      this.errors = [];
+      this.validateBasicData();
+
+      if (this.errors.length > 0) {
+        return false;
+      }
+      return true;
+    },
+    validateBasicData() {
+      if (!this.basicData.name) {
+        this.errors.push("Name required.");
+      }
+      if (!this.basicData.surname) {
+        this.errors.push("Surname required.");
+      }
+      if (!this.basicData.email) {
+        this.errors.push("Email required.");
+      }
+    },
     editData() {
-      axios
-        .post("update/basicData", {
-          basicData: this.basicData,
-        })
-        .then((response) => {
-          console.log("done");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (this.checkForm()) {
+        axios
+          .post("update/basicData", {
+            basicData: this.basicData,
+          })
+          .then((response) => {
+            console.log("done");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };

@@ -8,8 +8,7 @@
     <title>CV</title>
 
     @yield('stylesheet')
-    <!-- <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"> -->
-    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
 
 </head>
 

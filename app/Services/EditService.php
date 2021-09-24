@@ -6,11 +6,13 @@ use App\Fields\AddressField;
 use App\Fields\BasicDataField;
 use App\Fields\EducationField;
 use App\Fields\EmploymentField;
+use App\Fields\LanguageField;
 use App\Models\Address;
 use App\Models\BasicData;
 use App\Models\Education;
 use App\Models\Employment;
 use App\Models\EmploymentDescription;
+use App\Models\Language;
 
 class EditService
 {
@@ -70,6 +72,18 @@ class EditService
         }
 
         $this->updateEmploymentDescription($employmentField, $employmentId, $userId);
+    }
+
+    public function updateLanguage(LanguageField $languageField, int $languageId, string $userId): void
+    {
+        Language::updateOrCreate(
+            ['id' => $languageId],
+            [
+                'user_Id' => $userId,
+                'language' => $languageField->language(),
+                'level' => $languageField->level()
+            ]
+        );
     }
 
     private function updateEmploymentDescription(EmploymentField $employmentField, int $employmentId, string $userId): void

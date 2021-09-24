@@ -23,7 +23,8 @@ class ShowEditController extends Controller
             'address' => $this->service->address(),
             'education' => $this->service->education(),
             'employment' => $this->service->employment(),
-            'employmentDescription' => $this->service->employmentDescription()
+            'employmentDescription' => $this->service->employmentDescription(),
+            'language' => $this->service->language()
         ]);
     }
 }

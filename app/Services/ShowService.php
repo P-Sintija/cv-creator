@@ -7,6 +7,7 @@ use App\Models\BasicData;
 use App\Models\Education;
 use App\Models\Employment;
 use App\Models\EmploymentDescription;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Collection;
 
 class ShowService
@@ -38,6 +39,11 @@ class ShowService
     public function employmentDescription(): Collection
     {
         return EmploymentDescription::where('user_Id', $this->userId)->get();
+    }
+
+    public function language(): Collection
+    {
+        return Language::where('user_Id', $this->userId)->get();
     }
 
     private function setUserId(BasicData $basicData): void

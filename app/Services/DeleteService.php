@@ -7,6 +7,7 @@ use App\Models\BasicData;
 use App\Models\Education;
 use App\Models\Employment;
 use App\Models\EmploymentDescription;
+use App\Models\Language;
 
 class DeleteService
 {
@@ -33,6 +34,12 @@ class DeleteService
         $employment->delete();
         $employmentDescription = EmploymentDescription::where('employment_Id', $employmentId)->first();
         $employmentDescription->delete();
+    }
+
+    public function deleteLanguageEntity(int $languageId): void
+    {
+        $language = Language::find($languageId);
+        $language->delete();
     }
 
     private function address(string $userId): void
